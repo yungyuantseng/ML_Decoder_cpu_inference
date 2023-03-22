@@ -132,3 +132,5 @@ We will add this result to a future version of the paper.
       primaryClass={cs.CV}
 }
 ```
+### Fix by yungyuan
+I add a infer_with_cpu and can work on MAC M2.
