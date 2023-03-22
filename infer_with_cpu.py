@@ -2,6 +2,7 @@ import os
 import argparse
 import time
 
+
 import torch
 import torch.nn.parallel
 import torch.optim
@@ -65,13 +66,8 @@ def main():
     im_resize = im.resize((args.image_size, args.image_size))
     np_img = np.array(im_resize, dtype=np.uint8)
     tensor_img = torch.from_numpy(np_img).permute(2, 0, 1).float() / 255.0  # HWC to CHW
-    # tensor_batch = torch.unsqueeze(tensor_img, 0).cuda().half() # float16 inference
-    # tensor_batch = torch.unsqueeze(tensor_img, 0).half() # float16 inference
     tensor_batch = torch.unsqueeze(tensor_img, 0).cpu().half()
-    print('*****')
-    # print(tensor_batch, type(tensor_batch), tensor_batch.dtype)
     tensor_batch = torch.tensor(tensor_batch, dtype=torch.float)
-    # print(tensor_batch, type(tensor_batch), tensor_batch.dtype)
     output = torch.squeeze(torch.sigmoid(model(tensor_batch)))
     print(output)
     np_output = output.cpu().detach().numpy()
